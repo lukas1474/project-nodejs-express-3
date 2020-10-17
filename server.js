@@ -8,9 +8,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-app.get('/testimonials', cors(), (req, res) => {
+app.get('/testimonials', (req, res, next) => {
     res.json(db);
-});
+  })
 
 app.get('/testimonials/:id', (req, res) => {
     res.render('testimonialsID', {id: req.params.id});
@@ -21,5 +21,5 @@ app.get('/testimonials/random', (req, res) => {
 });
 
 app.listen(8000, () => {
-    console.log('CORS-enabled web server listening on port 80')
+    console.log('CORS-enabled web server listening on port 8000')
 });

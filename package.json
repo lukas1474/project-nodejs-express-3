@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "4.17.1",
+    "nodemon": "^2.0.5",
+    "uuid": "^8.3.1"
+  },
+  "name": "project-nodejs-express-3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:lukas1474/project-nodejs-express-3.git",
+  "author": "Lukasz Sobel <lukasz.sobel@hotmail.com>",
+  "license": "MIT"
+}

@@ -27,11 +27,37 @@ app.get('/testimonials/:id', (req, res, next) => {
 
 app.get('/testimonials/random', (req, res) => {
     res.render('testimonialsID', { id: req.params.id });
+
+    res.json({message: 'OK'});
+});
+
+app.put('/testimonials/:id', (req, res, next) => {
+    const id = req.params.id;
+    const author = req.body.author;
+    const text = req.body.text;
+    const result = db.map (position => {
+        if (position.id === id) {
+            position.author = req.body.author;
+            position.text = req.body.text;
+        }
+        return position;
+    });
+
+    res.json({message: 'OK'});
+});
+
+app.delete('/testimonials/:id', (req, res, next) => {
+    const id = req.params.id;
+    const result = db.filter(position => {
+        return position.id != id;
+    });
+
+    res.json({message: 'OK'});
 });
 
 app.use((req, res) => {
     res.status(404).send('404 not found...');
-})
+});
 
 app.listen(8000, () => {
     console.log('CORS-enabled web server listening on port 8000')

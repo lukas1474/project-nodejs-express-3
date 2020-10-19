@@ -17,12 +17,12 @@ app.use('/api', testimonials);
 app.use('/api', concerts);
 app.use('/api', seats);
 
-app.use((req, res) => {
-    res.status(404).send('404 not found...');
-});
-
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
+
+app.use((req, res) => {
+    res.status(404).send('404 not found...');
 });
 
 app.listen(process.env.PORT || 8000, () => {

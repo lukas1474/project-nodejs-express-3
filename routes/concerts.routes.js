@@ -54,6 +54,7 @@ router.route('/concerts/:id').delete((req, res, next) => {
     const result = db.concerts.filter(position => {
         return position.id != id;
     });
+    db.concerts = result;
 
     res.json({ message: 'OK' });
 });

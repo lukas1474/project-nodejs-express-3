@@ -21,15 +21,25 @@ router.route('/seats/:id').get((req, res, next) => {
 });
 
 router.route('/seats').post((req, res, next) => {
-    randomId = uuid.v4();
-    db.seats.push({
-        id: randomId,
-        day: req.body.day,
-        seat: req.body.seat,
-        client: req.body.client,
-        email: req.body.email,
+    let ifSeatFree = true;
+    db.seats.forEach(seat => {
+        if ((seat.day == req.body.day) && (seat.seat == req.body.seat)) {
+            ifSeatFree = false;
+            res.status(404).json({ message: 'The slot is already taken...' }); // TODO: check if error code ok
+        }
     });
-    res.json({ message: 'OK' });
+
+    if (ifSeatFree) {
+        randomId = uuid.v4();
+        db.seats.push({
+            id: randomId,
+            day: req.body.day,
+            seat: req.body.seat,
+            client: req.body.client,
+            email: req.body.email,
+        });
+        res.json({ message: "OK" })
+    }
 });
 
 router.route('/seats/:id').put((req, res, next) => {
@@ -52,6 +62,8 @@ router.route('/seats/:id').delete((req, res, next) => {
     const result = db.seats.filter(position => {
         return position.id != id;
     });
+
+    db.seats = result;
 
     res.json({ message: 'OK' });
 });

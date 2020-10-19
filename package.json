@@ -10,5 +10,7 @@
   "main": "index.js",
   "repository": "git@github.com:lukas1474/project-nodejs-express-3.git",
   "author": "Lukasz Sobel <lukasz.sobel@hotmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+
+  "build": "cd client && yarn install && yarn build"
 }

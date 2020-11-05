@@ -53,7 +53,7 @@ router.route('/seats/:id').put((req, res, next) => {
         }
         return position;
     });
-
+    
     res.json({ message: 'OK' });
 });
 
@@ -64,6 +64,8 @@ router.route('/seats/:id').delete((req, res, next) => {
     });
 
     db.seats = result;
+    res.json({ client: req.body.client })
+    req.io.emit('seatsUpdated', db.seats);
 
     res.json({ message: 'OK' });
 });

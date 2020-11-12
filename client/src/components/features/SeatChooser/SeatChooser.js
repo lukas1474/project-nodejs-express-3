@@ -44,6 +44,7 @@ class SeatChooser extends React.Component {
 
     const { prepareSeat } = this;
     const { requests, countSeats } = this.props;
+    console.log(this.props);
 
     return (
       <div>

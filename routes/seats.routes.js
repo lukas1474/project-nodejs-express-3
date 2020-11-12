@@ -2,10 +2,20 @@ const express = require('express');
 const router = express.Router();
 const db = require('./../db');
 const uuid = require('uuid');
+const Seat = require('../models/seat.model');
 
 router.route('/seats').get((req, res, next) => {
     res.json(db.seats);
 });
+
+// router.get('/seats', async (req, res, next) => {
+//     try {
+//         res.json(await Seat.find());
+//     }
+//     catch (err) {
+//         res.status(500).json({ message: err });
+//     }
+// });
 
 router.route('/seats/:id').get((req, res, next) => {
     const id = req.params.id;
@@ -20,12 +30,24 @@ router.route('/seats/:id').get((req, res, next) => {
     }
 });
 
+// router.get('/seats/:id', async (req, res, nest) => {
+//     try {
+//         const seat = await Seat.findById(req.params.id);
+//         if (!seat) res.status(404).json({ message: 'Not found' });
+//         else res.json(seat);
+//     }
+//     catch (err) {
+//         res.status(500).json({ message: err });
+//     }
+// });
+
+
 router.route('/seats').post((req, res, next) => {
     let ifSeatFree = true;
     db.seats.forEach(seat => {
         if ((seat.day == req.body.day) && (seat.seat == req.body.seat)) {
             ifSeatFree = false;
-            res.status(404).json({ message: 'The slot is already taken...' }); // TODO: check if error code ok
+            res.status(404).json({ message: 'The slot is already taken...' }); 
         }
     });
 
@@ -38,6 +60,8 @@ router.route('/seats').post((req, res, next) => {
             client: req.body.client,
             email: req.body.email,
         });
+        res.json({ client: req.body.client })
+        req.io.emit('seatsUpdated', db.seats);
         res.json({ message: "OK" })
     }
 });
